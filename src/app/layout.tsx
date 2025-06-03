@@ -3,6 +3,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Public_Sans } from 'next/font/google';
 
+import { Header } from '@/shared';
+
 const publicSans = Public_Sans({
   subsets: ['latin'],
 });
@@ -19,7 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${publicSans.className} antialiased`}>{children}</body>
+      <body className={`${publicSans.className} antialiased`}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
