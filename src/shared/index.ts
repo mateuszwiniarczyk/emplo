@@ -1,2 +1,3 @@
-export { Button } from './ui/Button';
-export { Header } from './ui/Header';
+export { Button } from './ui/button';
+export { Header } from './ui/header';
+export { Input } from './ui/input';

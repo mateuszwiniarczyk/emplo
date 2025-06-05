@@ -1,3 +1,3 @@
-import { JobsListPage } from '@/views/jobsList';
+import { JobsListPage } from '@/views/jobs-list';
 
 export default JobsListPage;
