@@ -27,7 +27,9 @@ export default function RootLayout({
       >
         <SessionProvider>
           <Header />
-          {children}
+          <main className="container flex flex-auto flex-col py-10">
+            {children}
+          </main>
         </SessionProvider>
       </body>
     </html>

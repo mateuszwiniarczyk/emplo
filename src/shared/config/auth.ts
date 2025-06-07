@@ -1,18 +1,9 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import bcrypt from 'bcryptjs';
-import NextAuth, { type DefaultSession } from 'next-auth';
+import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
 import { prisma } from './prisma/prisma';
-
-declare module 'next-auth' {
-  interface Session {
-    user: {
-      avatar?: string | null;
-      companyName?: string | null;
-    } & DefaultSession['user'];
-  }
-}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -22,6 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   pages: {
     signIn: '/sign-in',
+    signOut: '/sign-out',
   },
   providers: [
     Credentials({
@@ -65,15 +57,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     jwt({ token, user }) {
-      // console.log('JWT Callback:', { token, user });
       if (user) {
-        // User is available during sign-in
         token.avatar = user.avatar;
       }
       return token;
     },
     session({ session, token }) {
-      // console.log('Session Callback:', { session, token });
       session.user.avatar = token.avatar;
       return session;
     },
