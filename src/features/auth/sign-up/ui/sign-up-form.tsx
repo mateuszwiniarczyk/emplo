@@ -6,6 +6,7 @@ import { Button } from '@/shared';
 import { FormField } from '@/shared/ui/form-field';
 
 import { signUp } from '../api/sign-up';
+import { AvatarUploader } from './avatar-uploader';
 
 export const SignUpForm = () => {
   const [state, formAction, isPending] = useActionState(signUp, null);
@@ -13,6 +14,7 @@ export const SignUpForm = () => {
 
   return (
     <form className="space-y-4" action={formAction}>
+      <AvatarUploader />
       <FormField
         name="companyName"
         placeholder="Company name"

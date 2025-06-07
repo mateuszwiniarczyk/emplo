@@ -1,12 +1,19 @@
 'use server';
-import bcrypt from 'bcrypt';
+import { put } from '@vercel/blob';
+import bcrypt from 'bcryptjs';
 
 import { prisma } from '@/shared/config/prisma/prisma';
 
-import { userSignUpDtoSchema } from '../model/schema';
+import { userSignUpSchema } from '../model/schema';
 
 export const signUp = async (_: unknown, formData: FormData) => {
   try {
+    const imageFile = formData.get('avatar') as File;
+    const blob = await put(imageFile.name, imageFile, {
+      access: 'public',
+      addRandomSuffix: true,
+    });
+
     const user = {
       companyName: formData.get('companyName'),
       phoneNumber: formData.get('phoneNumber'),
@@ -15,7 +22,7 @@ export const signUp = async (_: unknown, formData: FormData) => {
       passwordConfirmation: formData.get('passwordConfirmation'),
     };
 
-    const { success, data, error } = userSignUpDtoSchema.safeParse(user);
+    const { success, data, error } = userSignUpSchema.safeParse(user);
 
     if (!success) {
       return {
@@ -43,7 +50,8 @@ export const signUp = async (_: unknown, formData: FormData) => {
         companyName: data.companyName,
         phoneNumber: data.phoneNumber,
         email: data.email,
-        passwordHash,
+        passwordHash: passwordHash,
+        imageUrl: blob.url,
       },
     });
 
@@ -52,7 +60,6 @@ export const signUp = async (_: unknown, formData: FormData) => {
       message: 'User created successfully',
     };
   } catch (error) {
-    console.error('Error creating user:', error);
     return {
       success: false,
       error: undefined,

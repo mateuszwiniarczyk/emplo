@@ -2,6 +2,7 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 import { Public_Sans } from 'next/font/google';
+import { SessionProvider } from 'next-auth/react';
 
 import { Header } from '@/shared';
 
@@ -24,8 +25,10 @@ export default function RootLayout({
       <body
         className={`${publicSans.className} flex min-h-screen flex-col antialiased`}
       >
-        <Header />
-        {children}
+        <SessionProvider>
+          <Header />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

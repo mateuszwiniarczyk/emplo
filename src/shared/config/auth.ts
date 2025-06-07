@@ -1,8 +1,18 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import NextAuth from 'next-auth';
+import bcrypt from 'bcryptjs';
+import NextAuth, { type DefaultSession } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
 import { prisma } from './prisma/prisma';
+
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      avatar?: string | null;
+      companyName?: string | null;
+    } & DefaultSession['user'];
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -10,36 +20,62 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+  pages: {
+    signIn: '/sign-in',
+  },
   providers: [
     Credentials({
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
       credentials: {
         email: {},
         password: {},
       },
       authorize: async (credentials) => {
-        // let user = null
-        console.log('credentials', credentials);
-        const user = {
-          email: 'john@doe.com',
-        };
+        let user = null;
 
-        // // logic to salt and hash password
-        // const pwHash = saltAndHashPassword(credentials.password)
+        const { email, password } = credentials;
 
-        // // logic to verify if the user exists
-        // user = await getUserFromDb(credentials.email, pwHash)
-
-        if (!user) {
-          // No user found, so this is their first attempt to login
-          // Optionally, this is also the place you could do a user registration
-          throw new Error('Invalid credentials.');
+        if (typeof email !== 'string' || typeof password !== 'string') {
+          return null;
         }
 
-        // return user object with their profile data
+        const userExists = await prisma.user.findUnique({ where: { email } });
+
+        if (!userExists) {
+          return null;
+        }
+
+        const isPasswordValid = await bcrypt.compare(
+          password,
+          userExists?.passwordHash,
+        );
+
+        if (!isPasswordValid) {
+          return null;
+        }
+
+        user = {
+          email: userExists.email,
+          companyName: userExists.companyName,
+          avatar: userExists.imageUrl,
+        };
+
         return user;
       },
     }),
   ],
+  callbacks: {
+    jwt({ token, user }) {
+      // console.log('JWT Callback:', { token, user });
+      if (user) {
+        // User is available during sign-in
+        token.avatar = user.avatar;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      // console.log('Session Callback:', { session, token });
+      session.user.avatar = token.avatar;
+      return session;
+    },
+  },
 });

@@ -1,5 +1,5 @@
 import { z } from 'zod';
 
-import { userSignUpDtoSchema } from './schema';
+import { userSignUpSchema } from './schema';
 
-export type UserSignUpDto = z.infer<typeof userSignUpDtoSchema>;
+export type userSignUp = z.infer<typeof userSignUpSchema>;
