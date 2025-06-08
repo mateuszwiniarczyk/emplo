@@ -1,6 +1,11 @@
 export { Header } from '../features/naviagation/ui/header';
 export { auth, handlers, signIn, signOut } from './config/auth';
 export * from './ui/avatar';
+export * from './ui/badge';
 export { Button } from './ui/button';
+export * from './ui/card';
 export * from './ui/dropdown-menu';
+export * from './ui/form-field';
 export { Input } from './ui/input';
+export * from './ui/select';
+export * from './ui/textarea';

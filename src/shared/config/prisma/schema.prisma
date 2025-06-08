@@ -16,8 +16,23 @@ model User {
   imageUrl     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  offers       Offer[]
 }
- 
 
-
+model Offer {
+  id            String          @id @default(cuid())
+  title         String
+  location      String
+  employmentType String
+  minSalary     Float
+  maxSalary     Float
+  description   String
+  requirements  String
+  benefits      String
+  tags          String[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  userId        String
+  user          User            @relation(fields: [userId], references: [id])
+}
  
