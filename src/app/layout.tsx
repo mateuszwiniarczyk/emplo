@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { Public_Sans } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
 
-import { Header } from '@/shared';
+import { Header, Toaster } from '@/shared';
 
 const publicSans = Public_Sans({
   subsets: ['latin'],
@@ -30,6 +30,7 @@ export default function RootLayout({
           <main className="container flex flex-auto flex-col py-10">
             {children}
           </main>
+          <Toaster />
         </SessionProvider>
       </body>
     </html>

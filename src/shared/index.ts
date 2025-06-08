@@ -8,4 +8,5 @@ export * from './ui/dropdown-menu';
 export * from './ui/form-field';
 export { Input } from './ui/input';
 export * from './ui/select';
+export * from './ui/sonner';
 export * from './ui/textarea';

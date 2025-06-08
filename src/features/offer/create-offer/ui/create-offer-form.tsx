@@ -1,6 +1,7 @@
 'use client';
 
 import { useActionState, useState } from 'react';
+import { toast } from 'sonner';
 
 import { Card, CardContent, CardHeader, CardTitle, FormField } from '@/shared';
 
@@ -34,6 +35,8 @@ export const CreateOfferForm = () => {
     };
 
     const result = await createOffer(data);
+
+    toast(result.message);
 
     return result;
   };
