@@ -1,5 +1,7 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
+
 import { auth } from '@/shared';
 import { prisma } from '@/shared/config/prisma/prisma';
 
@@ -9,7 +11,6 @@ import { CreateOfferFormData } from '../model/types';
 export const createOffer = async (offer: CreateOfferFormData) => {
   try {
     const session = await auth();
-    console.log('Session:', session);
 
     if (!session?.user) {
       return {
@@ -64,6 +65,8 @@ export const createOffer = async (offer: CreateOfferFormData) => {
         userId: user.id,
       },
     });
+
+    revalidateTag('offers');
 
     return {
       success: true,

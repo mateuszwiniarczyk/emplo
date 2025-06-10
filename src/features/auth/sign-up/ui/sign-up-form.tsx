@@ -3,7 +3,7 @@
 import { useActionState } from 'react';
 
 import { Button } from '@/shared';
-import { FormField } from '@/shared/ui/form-field';
+import { FormField } from '@/shared';
 
 import { signUp } from '../api/sign-up';
 import { AvatarUploader } from './avatar-uploader';

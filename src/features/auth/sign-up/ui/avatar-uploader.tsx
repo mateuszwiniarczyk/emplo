@@ -8,8 +8,8 @@ export const AvatarUploader = () => {
   const [fileName, setFileName] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
+    const file = event.target?.files?.[0];
+    if (file?.name) {
       setFileName(file.name);
     }
   };
@@ -30,11 +30,11 @@ export const AvatarUploader = () => {
             SVG, PNG, JPG
           </p>
 
-          {fileName && (
+          {fileName ? (
             <p className="mt-4 text-sm font-medium text-gray-700 dark:text-gray-300">
               Selected file: <span className="italic">{fileName}</span>
             </p>
-          )}
+          ) : null}
         </div>
         <input
           id="avatar"

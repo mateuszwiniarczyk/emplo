@@ -1,9 +1,24 @@
-import { Button } from '@/shared';
+import Link from 'next/link';
 
-export const OfferListPage = () => (
-  <div className="container py-4">
-    <h1>Jobs List</h1>
-    <p>This is a sample Jobs List Page.</p>
-    <Button>Click me</Button>
-  </div>
-);
+import { getOffers } from '../api/get-offers';
+import { OfferCard } from './offer-card';
+
+type OfferListPageProps = {
+  searchParams: { page?: string };
+};
+
+export const OfferListPage = async ({ searchParams }: OfferListPageProps) => {
+  const page = (await searchParams.page) || 1;
+  const offers = await getOffers(page);
+
+  return (
+    <>
+      <div className="space-y-5">
+        {offers.map((offer) => (
+          <OfferCard offer={offer} key={offer.id} />
+        ))}
+      </div>
+      <Link href="/offer/test">X</Link>
+    </>
+  );
+};

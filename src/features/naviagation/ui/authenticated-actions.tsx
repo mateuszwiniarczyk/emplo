@@ -1,11 +1,12 @@
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
-import { auth, Button } from '@/shared';
+import { Button } from '@/shared';
 
 import { UserDropdown } from './user-dropdown';
 
-export const AuthenticatedActions = async () => {
-  const session = await auth();
+export const AuthenticatedActions = () => {
+  const { data } = useSession();
   return (
     <>
       <Button className="ml-auto" size="sm" asChild>
@@ -13,8 +14,8 @@ export const AuthenticatedActions = async () => {
       </Button>
 
       <UserDropdown
-        avatar={session?.user.avatar || ''}
-        companyName={session?.user.companyName || ''}
+        avatar={data?.user.avatar || ''}
+        companyName={data?.user.companyName || ''}
       />
     </>
   );

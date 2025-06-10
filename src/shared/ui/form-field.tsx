@@ -4,7 +4,7 @@ import { cn } from '../lib/utils';
 
 interface FormFieldProps
   extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
-  error?: string;
+  error?: string | null;
   label?: string;
 }
 
