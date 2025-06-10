@@ -3,10 +3,10 @@ import { unstable_cache } from 'next/cache';
 
 import { prisma } from '@/shared/config/prisma/prisma';
 
+import { OFFERS_PAGE_SIZE } from '../model/constants';
+
 export const getOffers = unstable_cache(
   async (page) => {
-    const offset = 5;
-
     const offers = await prisma.offer.findMany({
       orderBy: [
         {
@@ -14,7 +14,7 @@ export const getOffers = unstable_cache(
         },
       ],
       take: 5,
-      skip: page === 1 ? 0 : page * offset,
+      skip: page === 1 ? 0 : page * OFFERS_PAGE_SIZE,
       include: {
         user: {
           select: {
