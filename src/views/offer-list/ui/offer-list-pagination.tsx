@@ -1,3 +1,4 @@
+'use client';
 import {
   Pagination,
   PaginationContent,
@@ -15,13 +16,14 @@ type OfferListPaginationProps = {
   offersCount: number;
 };
 
-export const OfferListPagination = async ({
+export const OfferListPagination = ({
   pageNumber,
   offersCount,
 }: OfferListPaginationProps) => {
   const totalPages = Math.ceil(offersCount / OFFERS_PAGE_SIZE);
   const previousPage = pageNumber - 1;
   const nextPage = pageNumber + 1;
+
   return (
     <Pagination>
       <PaginationContent>

@@ -34,7 +34,7 @@ export const OfferCard = ({ offer }: OfferCardProps) => (
               </h3>
 
               <div className="rounded-md bg-blue-400 px-3 py-1 text-sm font-semibold text-white">
-                {offer.minSalary} - {offer.maxSalary} / hour
+                ${offer.minSalary} - ${offer.maxSalary} / hour
               </div>
             </div>
 

@@ -1,4 +1,3 @@
-export { Header } from '../features/naviagation/ui/header';
 export { auth, handlers, signIn, signOut } from './config/auth';
 export { getEmploymentTypeLabel } from './config/employmentTypeMap';
 export * from './ui/avatar';

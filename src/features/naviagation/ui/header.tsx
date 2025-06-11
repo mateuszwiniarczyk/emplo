@@ -1,14 +1,13 @@
-'use client';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 
+import { auth } from '@/shared';
 import LogoIcon from '~/logo.svg';
 
 import { AuthenticatedActions } from './authenticated-actions';
 import { GuestActions } from './guest-actions';
 
-export const Header = () => {
-  const { data } = useSession();
+export const Header = async () => {
+  const data = await auth();
 
   return (
     <header className="border-b border-gray-200">

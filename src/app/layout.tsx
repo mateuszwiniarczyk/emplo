@@ -4,7 +4,8 @@ import type { Metadata } from 'next';
 import { Public_Sans } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
 
-import { Header, Toaster } from '@/shared';
+import { Header } from '@/features/naviagation';
+import { Toaster } from '@/shared';
 
 const publicSans = Public_Sans({
   subsets: ['latin'],

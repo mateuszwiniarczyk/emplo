@@ -19,7 +19,7 @@ export const OfferListPage = async ({ searchParams }: OfferListPageProps) => {
 
   return (
     <div className="flex flex-col items-center gap-y-10">
-      <div className="space-y-5">
+      <div className="w-full space-y-5">
         {offers.map((offer) => (
           <OfferCard offer={offer} key={offer.id} />
         ))}
